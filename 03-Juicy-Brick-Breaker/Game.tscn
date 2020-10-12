@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Paddle/PaddleContainer.gd" type="Script" id=1]
+[ext_resource path="res://Assets/backgroundcrys.png" type="Texture" id=2]
+[ext_resource path="res://Ball/BallContainer.gd" type="Script" id=3]
+[ext_resource path="res://Bricks/BrickContainer.gd" type="Script" id=4]
+[ext_resource path="res://Assets/glassbreak.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/glasstouch.wav" type="AudioStream" id=6]
+[ext_resource path="res://HUD/HUD.gd" type="Script" id=7]
+[ext_resource path="res://WorldEnvironment.gd" type="Script" id=8]
+
+[sub_resource type="SpriteFrames" id=26]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Environment" id=27]
+dof_blur_far_enabled = true
+dof_blur_near_quality = 2
+glow_enabled = true
+glow_intensity = 2.0
+glow_bloom = 0.1
+glow_blend_mode = 0
+glow_hdr_luminance_cap = 1.0
+glow_hdr_scale = 1.0
+glow_bicubic_upscale = true
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="AnimatedSprite" parent="."]
+position = Vector2( 883.466, 128.367 )
+scale = Vector2( 0.4966, 0.4966 )
+frames = SubResource( 26 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+polygon = PoolVector2Array( 0.00484324, 599.969, -0.142517, -0.0675793, 1024.47, 0.560349, 1024.47, 600.236, 1064.64, 600.976, 1061.06, -63.7721, -61.165, -68.529, -68.8948, 661.955, 0.0791626, 664.928 )
+
+[node name="PaddleContainer" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="BallContainer" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="BrickContainer" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="BrickSmash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="PaddleTouch" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="HUD" type="Node2D" parent="."]
+script = ExtResource( 7 )
+
+[node name="Score" type="Label" parent="HUD"]
+margin_left = 765.0
+margin_right = 1023.0
+margin_bottom = 62.0
+text = "Score:"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Label" parent="HUD"]
+margin_left = 2.0
+margin_top = 3.0
+margin_right = 260.0
+margin_bottom = 65.0
+text = "Health:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 27 )
+script = ExtResource( 8 )
